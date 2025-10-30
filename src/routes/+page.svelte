@@ -2,14 +2,19 @@
   import { onMount } from "svelte";
 
   let mouseCoordinates: [number, number] = $state([0, 0]);
+  let previousMouseCoordinates: [number, number] = $state([0, 0]);
   let displayCoordinates: [number, number] = $state([0, 0]);
+
   let session: [number, number][] = $state([]);
-  let interval: number | undefined = $state();
   let mode: "recording" | "replay" = $state("recording");
   let replayIndex = $state(0);
 
+  let previousTime: number = $state(0);
+  let delta: number = $state(0);
+
   function mouseMoved(event: MouseEvent) {
     mouseCoordinates = [event.x, event.y];
+    previousMouseCoordinates = mouseCoordinates;
     displayCoordinates = mouseCoordinates;
   }
 
@@ -17,15 +22,21 @@
     if (mode == "recording") {
       session.push(mouseCoordinates);
     } else {
-      displayCoordinates = mouseCoordinates;
+      previousMouseCoordinates = [...mouseCoordinates];
+      displayCoordinates = [...mouseCoordinates];
       mouseCoordinates = session[replayIndex];
       replayIndex++;
     }
   }
 
   function frame() {
+    const now = Date.now();
+    delta = now - previousTime;
+    previousTime = now;
+
     for (let index in displayCoordinates) {
-      displayCoordinates[index] += (mouseCoordinates[index] - displayCoordinates[index]) * 0.2;
+      displayCoordinates[index] +=
+        ((mouseCoordinates[index] - previousMouseCoordinates[index]) / 50) * delta;
     }
     requestAnimationFrame(frame);
   }
@@ -38,11 +49,11 @@
 
   onMount(() => {
     document.addEventListener("mousemove", mouseMoved);
-    interval = setInterval(logInterval, 50);
+    setInterval(logInterval, 50);
   });
 </script>
 
-<p>{mouseCoordinates}</p>
+<p>{replayIndex}</p>
 <button onclick={stopRecording}>Stop recording</button>
 
 <div class="cursor" style="left: {displayCoordinates[0]}px; top: {displayCoordinates[1]}px;"></div>
