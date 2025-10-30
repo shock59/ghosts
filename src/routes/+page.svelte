@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  let mouseCoordinates: [number, number] = $state([0, 0]);
-  let previousMouseCoordinates: [number, number] = $state([0, 0]);
-  let displayCoordinates: [number, number] = $state([0, 0]);
+  let mouseCoordinates: Coordinates = $state([0, 0]);
+  let previousMouseCoordinates: Coordinates = $state([0, 0]);
+  let displayCoordinates: Coordinates = $state([0, 0]);
 
-  let session: [number, number][] = $state([]);
+  let session: Coordinates[] = $state([]);
   let mode: "recording" | "replay" = $state("recording");
   let replayIndex = $state(0);
 
