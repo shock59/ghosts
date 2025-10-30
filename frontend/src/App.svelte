@@ -36,7 +36,8 @@
 
     for (let index in displayCoordinates) {
       displayCoordinates[index] +=
-        ((mouseCoordinates[index] - previousMouseCoordinates[index]) / 50) * delta;
+        ((mouseCoordinates[index] - previousMouseCoordinates[index]) / 50) *
+        delta;
     }
     requestAnimationFrame(frame);
   }
@@ -56,7 +57,10 @@
 <p>{replayIndex}</p>
 <button onclick={stopRecording}>Stop recording</button>
 
-<div class="cursor" style="left: {displayCoordinates[0]}px; top: {displayCoordinates[1]}px;"></div>
+<div
+  class="cursor"
+  style="left: {displayCoordinates[0]}px; top: {displayCoordinates[1]}px;"
+></div>
 
 <style>
   .cursor {
