@@ -25,7 +25,7 @@
       previousMouseCoordinates = [...mouseCoordinates];
       displayCoordinates = [...mouseCoordinates];
       mouseCoordinates = session[replayIndex];
-      replayIndex++;
+      if (replayIndex != session.length - 1) replayIndex++;
     }
   }
 
