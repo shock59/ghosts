@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { io, type Socket } from "socket.io-client";
   import { onMount } from "svelte";
+
+  let socket: Socket;
 
   let mouseCoordinates: Coordinates = $state([0, 0]);
   let previousMouseCoordinates: Coordinates = $state([0, 0]);
@@ -49,6 +52,8 @@
   }
 
   onMount(() => {
+    socket = io("http://localhost:3000");
+
     document.addEventListener("mousemove", mouseMoved);
     setInterval(logInterval, 50);
   });
