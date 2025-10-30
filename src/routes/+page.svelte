@@ -13,3 +13,14 @@
 </script>
 
 <p>{mouseCoordinates}</p>
+
+<div class="cursor" style="left: {mouseCoordinates[0]}px; top: {mouseCoordinates[1]}px;"></div>
+
+<style>
+  .cursor {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+  }
+</style>
