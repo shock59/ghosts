@@ -11,10 +11,16 @@
     new Array(height).fill(new Array(width).fill(0))
   );
 
-  function changeCellColor(rowIndex: number, columnIndex: number) {
-    drawing[rowIndex][columnIndex]++;
+  function changeCellColor(
+    direction: number,
+    rowIndex: number,
+    columnIndex: number
+  ) {
+    drawing[rowIndex][columnIndex] += direction;
     if (drawing[rowIndex][columnIndex] >= extendedColors.length)
       drawing[rowIndex][columnIndex] = 0;
+    if (drawing[rowIndex][columnIndex] < 0)
+      drawing[rowIndex][columnIndex] = extendedColors.length - 1;
   }
 
   onMount(() => {
@@ -30,7 +36,11 @@
           class="cell"
           style="background: {extendedColors[cell]}"
           aria-label="cell"
-          onclick={() => changeCellColor(rowIndex, columnIndex)}
+          onclick={() => changeCellColor(1, rowIndex, columnIndex)}
+          oncontextmenu={(event) => {
+            changeCellColor(-1, rowIndex, columnIndex);
+            event.preventDefault();
+          }}
         ></button>
       {/each}
     </div>
