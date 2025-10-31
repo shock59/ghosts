@@ -19,7 +19,10 @@
   }
 
   function mouseMoved(event: MouseEvent) {
-    mouseCoordinates = [event.x, event.y];
+    mouseCoordinates = [
+      event.x - contentCoordinates[0],
+      event.y - contentCoordinates[1],
+    ];
   }
 
   function logInterval() {
@@ -51,7 +54,7 @@
 </p>
 
 {#each sessions as session}
-  <GhostReplay {session} />
+  <GhostReplay {session} {contentCoordinates} />
 {/each}
 
 <main>

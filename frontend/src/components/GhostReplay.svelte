@@ -1,7 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  let { session }: { session: Coordinates[] } = $props();
+  let {
+    session,
+    contentCoordinates,
+  }: { session: Coordinates[]; contentCoordinates: Coordinates } = $props();
 
   const colors = ["red", "orange", "green", "blue", "purple", "magenta"];
 
@@ -53,8 +56,9 @@
 
 <div
   class="cursor"
-  style="left: {displayCoordinates[0] - 16}px; top: {displayCoordinates[1] -
-    16}px;"
+  style="left: {displayCoordinates[0] +
+    contentCoordinates[0] -
+    16}px; top: {displayCoordinates[1] + contentCoordinates[1] - 16}px;"
   bind:this={element}
 >
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
