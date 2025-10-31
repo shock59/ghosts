@@ -2,6 +2,7 @@
   import { io, type Socket } from "socket.io-client";
   import { onMount } from "svelte";
   import GhostReplay from "./components/GhostReplay.svelte";
+  import Counter from "./components/Counter.svelte";
 
   let socket: Socket;
 
@@ -67,6 +68,8 @@
 
     Try interacting with some of the elements here for a while, and your ghost
     will be added to the site for the next person who visits to see!
+
+    <Counter />
   </div>
 </main>
 
