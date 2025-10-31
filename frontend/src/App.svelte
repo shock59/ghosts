@@ -64,17 +64,19 @@
 <style>
   main {
     width: 100vw;
+    min-width: 800px;
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    background: #181825;
   }
 
   #content {
-    width: 240px;
+    width: 800px;
     padding: 16px;
-    color: white;
-    background: blue;
+    color: #cdd6f4;
+    background: #1e1e2e;
+    font-family: "Inter";
     font-weight: bold;
     text-align: center;
   }
