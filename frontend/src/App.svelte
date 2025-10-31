@@ -58,7 +58,16 @@
 {/each}
 
 <main>
-  <div id="content" bind:this={content}>Content</div>
+  <div id="content" bind:this={content}>
+    Hello! All of the ghosts you can see moving around this site are the replays
+    of what other people were doing here before you arrived.
+
+    <br />
+    <br />
+
+    Try interacting with some of the elements here for a while, and your ghost
+    will be added to the site for the next person who visits to see!
+  </div>
 </main>
 
 <style>
@@ -73,11 +82,11 @@
 
   #content {
     width: 800px;
-    padding: 16px;
+    padding: 16px 32px;
     color: #cdd6f4;
     background: #1e1e2e;
     font-family: "Inter";
-    font-weight: bold;
+    font-size: 18px;
     text-align: center;
   }
 
