@@ -1,25 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import colors from "../lib/colors";
 
   let {
     session,
     contentCoordinates,
   }: { session: Coordinates[]; contentCoordinates: Coordinates } = $props();
-
-  const colors = [
-    "#f5c2e7",
-    "#cba6f7",
-    "#f38ba8",
-    "#eba0ac",
-    "#fab387",
-    "#f9e2af",
-    "#a6e3a1",
-    "#94e2d5",
-    "#89dceb",
-    "#74c7ec",
-    "#89b4fa",
-    "#b4befe",
-  ];
 
   let element: HTMLElement;
 

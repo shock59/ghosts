@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import GhostReplay from "./components/GhostReplay.svelte";
   import Counter from "./components/Counter.svelte";
+  import Canvas from "./components/Canvas.svelte";
 
   let socket: Socket;
 
@@ -66,6 +67,8 @@
     will be added to the site for the next person who visits to see!
 
     <Counter />
+
+    <Canvas />
   </div>
 </main>
 
