@@ -50,10 +50,6 @@
   });
 </script>
 
-<p id="status">
-  {contentCoordinates}
-</p>
-
 {#each sessions as session}
   <GhostReplay {session} {contentCoordinates} />
 {/each}
