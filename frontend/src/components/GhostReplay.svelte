@@ -25,7 +25,6 @@
     sessionIndex++;
     if (sessionIndex == session.length) {
       clearInterval(intervalId);
-      element.style.opacity = "0";
       return;
     }
     targetCoordinates = session[sessionIndex];
@@ -58,7 +57,9 @@
   class="cursor"
   style="left: {displayCoordinates[0] +
     contentCoordinates[0] -
-    16}px; top: {displayCoordinates[1] + contentCoordinates[1] - 16}px;"
+    16}px; top: {displayCoordinates[1] +
+    contentCoordinates[1] -
+    16}px; opacity: {sessionIndex == session.length ? 0 : 1};"
   bind:this={element}
 >
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -76,6 +77,5 @@
     height: 32px;
     pointer-events: none;
     transition: 3s opacity;
-    opacity: 1;
   }
 </style>
