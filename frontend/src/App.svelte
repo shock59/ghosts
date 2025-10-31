@@ -76,7 +76,6 @@
   main {
     width: 100vw;
     min-width: 800px;
-    overflow-x: hidden;
     height: 100vh;
     display: flex;
     justify-content: center;
