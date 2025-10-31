@@ -89,10 +89,4 @@
     font-size: 18px;
     text-align: center;
   }
-
-  #status {
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
 </style>
