@@ -8,8 +8,9 @@
   let previousMouseCoordinates: Coordinates = $state([0, 0]);
   let displayCoordinates: Coordinates = $state([0, 0]);
 
+  let sessions: Coordinates[][] = $state([]);
+
   let session: Coordinates[] = $state([]);
-  let mode: "recording" | "replay" = $state("recording");
   let replayIndex = $state(0);
 
   let previousTime: number = $state(0);
@@ -22,50 +23,65 @@
   }
 
   function logInterval() {
-    if (mode == "recording") {
-      session.push(mouseCoordinates);
-    } else {
-      previousMouseCoordinates = [...mouseCoordinates];
-      displayCoordinates = [...mouseCoordinates];
-      mouseCoordinates = session[replayIndex];
-      if (replayIndex != session.length - 1) replayIndex++;
-    }
+    session.push(mouseCoordinates);
+    // previousMouseCoordinates = [...mouseCoordinates];
+    // displayCoordinates = [...mouseCoordinates];
+    // mouseCoordinates = session[replayIndex];
+    replayIndex++;
   }
 
-  function frame() {
-    const now = Date.now();
-    delta = now - previousTime;
-    previousTime = now;
-
-    for (let index in displayCoordinates) {
-      displayCoordinates[index] +=
-        ((mouseCoordinates[index] - previousMouseCoordinates[index]) / 50) *
-        delta;
-    }
-    requestAnimationFrame(frame);
+  function socketInterval() {
+    socket.emit("data", session);
+    session = [];
   }
 
-  function stopRecording() {
-    mode = "replay";
-    document.removeEventListener("mousemove", mouseMoved);
-    requestAnimationFrame(frame);
-  }
+  // function frame() {
+  //   const now = Date.now();
+  //   delta = now - previousTime;
+  //   previousTime = now;
+
+  //   for (let index in displayCoordinates) {
+  //     displayCoordinates[index] +=
+  //       ((mouseCoordinates[index] - previousMouseCoordinates[index]) / 50) *
+  //       delta;
+  //   }
+  //   requestAnimationFrame(frame);
+  // }
 
   onMount(() => {
     socket = io("http://localhost:3000");
 
+    socket.on("sessions", (newSessions) => {
+      sessions = newSessions;
+    });
+
     document.addEventListener("mousemove", mouseMoved);
     setInterval(logInterval, 50);
+    setInterval(socketInterval, 500);
   });
 </script>
 
 <p>{replayIndex}</p>
-<button onclick={stopRecording}>Stop recording</button>
 
-<div
-  class="cursor"
-  style="left: {displayCoordinates[0]}px; top: {displayCoordinates[1]}px;"
-></div>
+{#if session.length}
+  <div
+    class="cursor"
+    style="left: {session[session.length - 1][0]}px; top: {session[
+      session.length - 1
+    ][1]}px;"
+  ></div>
+{/if}
+
+{#each sessions as session}
+  {#if session[replayIndex]}
+    <div
+      class="cursor"
+      style="left: {session[replayIndex][0]}px; top: {session[
+        replayIndex
+      ][1]}px;"
+    ></div>
+  {/if}
+{/each}
 
 <style>
   .cursor {

@@ -1,0 +1,1 @@
+type Coordinates = [number, number];
