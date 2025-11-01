@@ -31,8 +31,8 @@
 
   function mouseMoved(event: MouseEvent) {
     mouseCoordinates = [
-      event.x - contentCoordinates[0],
-      event.y - contentCoordinates[1],
+      event.pageX - contentCoordinates[0],
+      event.pageY - contentCoordinates[1],
     ];
   }
 
