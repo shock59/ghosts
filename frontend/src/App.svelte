@@ -13,6 +13,7 @@
 
   let mouseCoordinates: Coordinates = $state([0, 0]);
   let session: Session = $state([]);
+  let delay: number = $state(0);
 
   let content: HTMLElement;
   let contentCoordinates: Coordinates = $state([0, 0]);
@@ -36,10 +37,20 @@
   }
 
   function logInterval() {
-    session.push([0, mouseCoordinates]);
+    const newLog = [0, mouseCoordinates];
+    if (session.length > 0 && newLog[1] == session[session.length - 1][1]) {
+      delay += 50;
+    } else {
+      if (delay > 0) {
+        session.push([2, delay]);
+        delay = 0;
+      }
+      session.push([0, mouseCoordinates]);
+    }
   }
 
   function socketInterval() {
+    if (delay > 0) return;
     socket.emit("data", session);
     session = [];
   }

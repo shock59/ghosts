@@ -25,7 +25,7 @@
 
   function nextSessionEntry() {
     sessionIndex++;
-    if (sessionIndex == session.length) {
+    if (sessionIndex >= session.length) {
       return;
     }
 
@@ -35,15 +35,18 @@
       targetCoordinates = entry[1];
       displayCoordinates = [...previousCoordinates];
       setTimeout(nextSessionEntry, 50);
-    } else {
+    } else if (entry[0] === 1) {
       previousCoordinates = [...targetCoordinates];
       executeCommand(entry[1]);
       nextSessionEntry();
+    } else {
+      previousCoordinates = [...targetCoordinates];
+      setTimeout(nextSessionEntry, entry[1]);
     }
   }
 
   function frame() {
-    if (sessionIndex == session.length) return;
+    if (sessionIndex >= session.length) return;
 
     const now = Date.now();
     delta = now - previousTime;
@@ -69,7 +72,7 @@
     contentCoordinates[0] -
     16}px; top: {displayCoordinates[1] +
     contentCoordinates[1] -
-    16}px; opacity: {sessionIndex == session.length ? 0 : 1};"
+    16}px; opacity: {sessionIndex >= session.length ? 0 : 1};"
   bind:this={element}
 >
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
