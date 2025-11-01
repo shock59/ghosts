@@ -2,6 +2,8 @@
   import { onMount } from "svelte";
   import colors from "../lib/colors";
 
+  let { addCommand }: { addCommand: (arg: unknown) => void } = $props();
+
   const extendedColors = ["#313244", ...colors];
 
   const width = 8;
@@ -11,16 +13,23 @@
     new Array(height).fill(new Array(width).fill(0))
   );
 
+  export function executeCommand(options: [number, number, number]) {
+    changeCellColor(...options, false);
+  }
+
   function changeCellColor(
     direction: number,
     rowIndex: number,
-    columnIndex: number
+    columnIndex: number,
+    doAddCommand: boolean = true
   ) {
     drawing[rowIndex][columnIndex] += direction;
     if (drawing[rowIndex][columnIndex] >= extendedColors.length)
       drawing[rowIndex][columnIndex] = 0;
     if (drawing[rowIndex][columnIndex] < 0)
       drawing[rowIndex][columnIndex] = extendedColors.length - 1;
+
+    if (doAddCommand) addCommand([direction, rowIndex, columnIndex]);
   }
 
   onMount(() => {

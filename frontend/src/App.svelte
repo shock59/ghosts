@@ -18,6 +18,7 @@
   let contentCoordinates: Coordinates = $state([0, 0]);
 
   let counter: Counter;
+  let canvas: Canvas;
 
   function updateContentCoordinates() {
     const rect = content.getBoundingClientRect();
@@ -45,8 +46,12 @@
   }
 
   function executeCommand(command: Command) {
-    if (command[0] == "counter") {
-      counter.executeCommand(command[1] as number);
+    switch (command[0]) {
+      case "counter":
+        counter.executeCommand(command[1] as number);
+        break;
+      case "canvas":
+        canvas.executeCommand(command[1] as [number, number, number]);
     }
   }
 
@@ -87,7 +92,12 @@
       />
     </div>
 
-    <div class="container"><Canvas /></div>
+    <div class="container">
+      <Canvas
+        addCommand={(arg) => addCommand(["canvas", arg])}
+        bind:this={canvas}
+      />
+    </div>
 
     <div class="container"><Slider color={colors[2]} /></div>
     <div class="container"><Slider color={colors[6]} /></div>
