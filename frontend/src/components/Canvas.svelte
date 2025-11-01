@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import colors from "../lib/colors";
 
   let { addCommand }: { addCommand: (arg: unknown) => void } = $props();
@@ -31,10 +30,6 @@
 
     if (doAddCommand) addCommand([direction, rowIndex, columnIndex]);
   }
-
-  onMount(() => {
-    console.log(drawing);
-  });
 </script>
 
 <div class="canvas">
