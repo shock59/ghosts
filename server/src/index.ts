@@ -13,11 +13,14 @@ const server = createServer(app);
 const io = new Server(server, { cors: { origin: "http://localhost:5173" } });
 
 setInterval(() => {
+  console.log(
+    `Writing sessions to DB (${db.data.sessions.length} sessions stored)`
+  );
   db.write();
 }, 60_000);
 
 io.on("connection", (socket) => {
-  console.log(`Connected: ${socket.id}`);
+  console.log(`Client connected: ${socket.id}`);
   socket.emit("sessions", Object.values(db.data.sessions));
 
   socket.on("data", (data: Coordinates[]) => {
@@ -27,7 +30,9 @@ io.on("connection", (socket) => {
     ];
   });
 
-  socket.on("disconnect", () => console.log(`Disconnected: ${socket.id}`));
+  socket.on("disconnect", () =>
+    console.log(`Client disconnected: ${socket.id}`)
+  );
 });
 
 server.listen(3000, () => {
