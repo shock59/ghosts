@@ -49,6 +49,7 @@
   }
 
   function executeCommand(command: Command) {
+    console.log(command[0]);
     switch (command[0]) {
       case "counter":
         counter.executeCommand(command[1] as number);

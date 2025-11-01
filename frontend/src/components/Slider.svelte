@@ -23,9 +23,11 @@
   }
 
   function onMouseUp() {
-    mouseDown = false;
-    clearInterval(interval);
-    addCommand(sliderPosition);
+    if (mouseDown) {
+      mouseDown = false;
+      clearInterval(interval);
+      addCommand(sliderPosition);
+    }
   }
 
   function onMouseMove(event: MouseEvent) {
