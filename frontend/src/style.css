@@ -2,3 +2,22 @@ body {
   margin: 0;
   overflow-x: hidden;
 }
+
+button,
+input {
+  margin: 0 8px;
+  padding: 6px 16px;
+  color: inherit;
+  background: #313244;
+  border: 1px #45475a solid;
+  border-radius: 8px;
+  outline: none;
+  font: inherit;
+  transition: 180ms;
+}
+
+button:hover,
+input:focus {
+  background: #45475a;
+  border-color: #585b70;
+}

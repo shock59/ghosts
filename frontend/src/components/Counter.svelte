@@ -32,23 +32,6 @@
     font-size: 22px;
   }
 
-  button {
-    margin: 0 8px;
-    padding: 6px 16px;
-    color: inherit;
-    background: #313244;
-    border: 1px #45475a solid;
-    border-radius: 8px;
-    outline: none;
-    font: inherit;
-    transition: 180ms;
-  }
-
-  button:hover {
-    background: #45475a;
-    border-color: #585b70;
-  }
-
   .counter-value {
     min-width: 180px;
     margin: 0 8px;

@@ -67,7 +67,9 @@
   .cell {
     width: 80px;
     height: 80px;
+    margin: 0;
     border: 1px #45475a solid;
+    border-radius: 0;
     border-right: none;
     border-bottom: none;
     outline: none;

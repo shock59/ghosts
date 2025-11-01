@@ -12,8 +12,9 @@
   let sessions: Session[] = $state([]);
 
   let mouseCoordinates: Coordinates = $state([0, 0]);
-  let session: Session = $state([]);
   let delay: number = $state(0);
+  let session: Session = $state([]);
+  let ghostName: string = $state("");
 
   let content: HTMLElement;
   let contentCoordinates: Coordinates = $state([0, 0]);
@@ -77,6 +78,10 @@
         slider2.executeCommand(command[1] as number);
         break;
     }
+  }
+
+  function updateGhostName() {
+    socket.emit("updateName", ghostName);
   }
 
   onMount(() => {
@@ -143,6 +148,15 @@
         addCommand={(arg) => addCommand(["slider2", arg])}
         bind:this={slider2}
       />
+    </div>
+
+    <br />
+
+    <div class="container">Give your ghost a name:</div>
+    <div class="container">
+      <input placeholder="Ghost" bind:value={ghostName} /><button
+        onclick={updateGhostName}>Save</button
+      >
     </div>
   </div>
 </main>

@@ -23,15 +23,20 @@ io.on("connection", (socket) => {
   })();
 
   let session: Session = [];
+  let name: string = "Ghost";
 
   socket.on("data", (data: Session) => {
     session = [...session, ...data];
+  });
+  socket.on("updateName", (newName: string) => {
+    newName = newName.trim();
+    name = newName != "" ? newName : "Ghost";
   });
 
   socket.on("disconnect", async () => {
     console.log(`Client disconnected: ${socket.id}`);
     await db.insert(replaysTable).values({
-      name: "ghost",
+      name,
       session: JSON.stringify(session),
     });
   });
