@@ -15,6 +15,7 @@
   let delay: number = $state(0);
   let session: Session = $state([]);
   let ghostName: string = $state("");
+  let lastUpdatedGhostName: string = $state("");
 
   let content: HTMLElement;
   let contentCoordinates: Coordinates = $state([0, 0]);
@@ -82,6 +83,7 @@
 
   function updateGhostName() {
     socket.emit("updateName", ghostName);
+    lastUpdatedGhostName = ghostName.trim() != "" ? ghostName : "Ghost";
   }
 
   onMount(() => {
@@ -157,6 +159,11 @@
       <input placeholder="Ghost" bind:value={ghostName} /><button
         onclick={updateGhostName}>Save</button
       >
+    </div>
+    <div class="container">
+      {#if lastUpdatedGhostName != ""}
+        Updated name to {lastUpdatedGhostName}
+      {/if}
     </div>
   </div>
 </main>
