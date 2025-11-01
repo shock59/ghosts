@@ -4,6 +4,7 @@
   import GhostReplay from "./components/GhostReplay.svelte";
   import Counter from "./components/Counter.svelte";
   import Canvas from "./components/Canvas.svelte";
+  import Slider from "./components/Slider.svelte";
 
   let socket: Socket;
 
@@ -69,6 +70,8 @@
     <Counter />
 
     <Canvas />
+
+    <Slider />
   </div>
 </main>
 
