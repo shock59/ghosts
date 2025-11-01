@@ -67,11 +67,13 @@
     Try interacting with some of the elements here for a while, and your ghost
     will be added to the site for the next person who visits to see!
 
-    <Counter />
+    <div class="container"><Counter /></div>
 
-    <Canvas />
+    <div class="container"><Canvas /></div>
 
-    <Slider />
+    <div class="container"><Slider /></div>
+    <div class="container"><Slider /></div>
+    <div class="container"><Slider /></div>
   </div>
 </main>
 
@@ -93,5 +95,11 @@
     font-family: "Inter";
     font-size: 18px;
     text-align: center;
+  }
+
+  .container {
+    width: fit-content;
+    margin: 16px auto;
+    display: flex;
   }
 </style>

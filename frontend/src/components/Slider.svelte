@@ -41,8 +41,7 @@
   .slider {
     width: 640px;
     height: 20px;
-    margin: 16px auto;
-    margin-top: 26px;
+    margin: 10px auto;
     display: flex;
     background: #313244;
     border: 1px #45475a solid;
