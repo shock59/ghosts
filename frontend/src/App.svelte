@@ -151,7 +151,7 @@
   main {
     width: 100vw;
     min-width: 800px;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     background: #181825;
