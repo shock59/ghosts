@@ -9,13 +9,15 @@
 
   let socket: Socket;
 
-  let sessions: Coordinates[][] = $state([]);
+  let sessions: Session[] = $state([]);
 
   let mouseCoordinates: Coordinates = $state([0, 0]);
-  let session: Coordinates[] = $state([]);
+  let session: Session = $state([]);
 
   let content: HTMLElement;
   let contentCoordinates: Coordinates = $state([0, 0]);
+
+  let counter: Counter;
 
   function updateContentCoordinates() {
     const rect = content.getBoundingClientRect();
@@ -30,12 +32,22 @@
   }
 
   function logInterval() {
-    session.push(mouseCoordinates);
+    session.push([0, mouseCoordinates]);
   }
 
   function socketInterval() {
     socket.emit("data", session);
     session = [];
+  }
+
+  function addCommand(command: Command) {
+    session.push([1, command]);
+  }
+
+  function executeCommand(command: Command) {
+    if (command[0] == "counter") {
+      counter.executeCommand(command[1] as number);
+    }
   }
 
   onMount(() => {
@@ -54,7 +66,7 @@
 </script>
 
 {#each sessions as session}
-  <GhostReplay {session} {contentCoordinates} />
+  <GhostReplay {session} {contentCoordinates} {executeCommand} />
 {/each}
 
 <main>
@@ -68,7 +80,12 @@
     Try interacting with some of the elements here for a while, and your ghost
     will be added to the site for the next person who visits to see!
 
-    <div class="container"><Counter /></div>
+    <div class="container">
+      <Counter
+        addCommand={(arg) => addCommand(["counter", arg])}
+        bind:this={counter}
+      />
+    </div>
 
     <div class="container"><Canvas /></div>
 

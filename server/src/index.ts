@@ -3,7 +3,7 @@ import { JSONFilePreset } from "lowdb/node";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 
-const db = await JSONFilePreset<{ sessions: Record<string, Coordinates[]> }>(
+const db = await JSONFilePreset<{ sessions: Record<string, Session> }>(
   "db.json",
   { sessions: {} }
 );
@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
   console.log(`Client connected: ${socket.id}`);
   socket.emit("sessions", Object.values(db.data.sessions));
 
-  socket.on("data", (data: Coordinates[]) => {
+  socket.on("data", (data: Session) => {
     db.data.sessions[socket.id] = [
       ...(db.data.sessions[socket.id] ?? []),
       ...data,

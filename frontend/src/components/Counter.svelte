@@ -1,15 +1,25 @@
 <script lang="ts">
+  let { addCommand }: { addCommand: (arg: unknown) => void } = $props();
   let value: number = $state(0);
+
+  export function executeCommand(amount: number) {
+    value += amount;
+  }
+
+  function changeValue(amount: number) {
+    value += amount;
+    addCommand(amount);
+  }
 </script>
 
 <div class="counter">
-  <button onclick={() => (value -= 10)}>-10</button>
-  <button onclick={() => (value -= 5)}>-5</button>
-  <button onclick={() => (value -= 1)}>-1</button>
+  <button onclick={() => changeValue(-10)}>-10</button>
+  <button onclick={() => changeValue(-5)}>-5</button>
+  <button onclick={() => changeValue(-1)}>-1</button>
   <div class="counter-value">{value}</div>
-  <button onclick={() => (value += 1)}>+1</button>
-  <button onclick={() => (value += 5)}>+5</button>
-  <button onclick={() => (value += 10)}>+10</button>
+  <button onclick={() => changeValue(1)}>+1</button>
+  <button onclick={() => changeValue(5)}>+5</button>
+  <button onclick={() => changeValue(10)}>+10</button>
 </div>
 
 <style>

@@ -5,7 +5,12 @@
   let {
     session,
     contentCoordinates,
-  }: { session: Coordinates[]; contentCoordinates: Coordinates } = $props();
+    executeCommand,
+  }: {
+    session: Session;
+    contentCoordinates: Coordinates;
+    executeCommand: (command: Command) => void;
+  } = $props();
 
   let element: HTMLElement;
 
@@ -26,9 +31,15 @@
       clearInterval(intervalId);
       return;
     }
-    targetCoordinates = session[sessionIndex];
-    previousCoordinates = session[sessionIndex - 1];
-    displayCoordinates = [...previousCoordinates];
+
+    const entry = session[sessionIndex];
+    if (entry[0] === 0) {
+      previousCoordinates = [...targetCoordinates];
+      targetCoordinates = entry[1];
+      displayCoordinates = [...previousCoordinates];
+    } else {
+      executeCommand(entry[1]);
+    }
   }
 
   function frame() {
