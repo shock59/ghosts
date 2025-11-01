@@ -1,19 +1,31 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  const { color }: { color: string } = $props();
+  const {
+    color,
+    addCommand,
+  }: { color: string; addCommand: (arg: unknown) => void } = $props();
 
   let sliderElement: HTMLDivElement;
 
   let mouseDown: boolean = $state(false);
   let sliderPosition: number = $state(10);
 
+  let interval: number = $state(0);
+
+  export function executeCommand(newSliderPosition: number) {
+    sliderPosition = newSliderPosition;
+  }
+
   function onMouseDown() {
     mouseDown = true;
+    interval = setInterval(() => addCommand(sliderPosition), 50);
   }
 
   function onMouseUp() {
     mouseDown = false;
+    clearInterval(interval);
+    addCommand(sliderPosition);
   }
 
   function onMouseMove(event: MouseEvent) {
@@ -33,7 +45,7 @@
 <div
   class="slider"
   bind:this={sliderElement}
-  style="background: linear-gradient(to right, {color}, {color} {sliderPosition}px, #313244 {sliderPosition}px)"
+  style="background: linear-gradient(to right, {color}, {color} {sliderPosition}px, #313244 {sliderPosition}px"
 >
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div

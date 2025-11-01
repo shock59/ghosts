@@ -19,6 +19,9 @@
 
   let counter: Counter;
   let canvas: Canvas;
+  let slider0: Slider;
+  let slider1: Slider;
+  let slider2: Slider;
 
   function updateContentCoordinates() {
     const rect = content.getBoundingClientRect();
@@ -52,6 +55,16 @@
         break;
       case "canvas":
         canvas.executeCommand(command[1] as [number, number, number]);
+        break;
+      case "slider0":
+        slider0.executeCommand(command[1] as number);
+        break;
+      case "slider1":
+        slider1.executeCommand(command[1] as number);
+        break;
+      case "slider2":
+        slider2.executeCommand(command[1] as number);
+        break;
     }
   }
 
@@ -99,9 +112,27 @@
       />
     </div>
 
-    <div class="container"><Slider color={colors[2]} /></div>
-    <div class="container"><Slider color={colors[6]} /></div>
-    <div class="container"><Slider color={colors[9]} /></div>
+    <div class="container">
+      <Slider
+        color={colors[2]}
+        addCommand={(arg) => addCommand(["slider0", arg])}
+        bind:this={slider0}
+      />
+    </div>
+    <div class="container">
+      <Slider
+        color={colors[6]}
+        addCommand={(arg) => addCommand(["slider1", arg])}
+        bind:this={slider1}
+      />
+    </div>
+    <div class="container">
+      <Slider
+        color={colors[9]}
+        addCommand={(arg) => addCommand(["slider2", arg])}
+        bind:this={slider2}
+      />
+    </div>
   </div>
 </main>
 

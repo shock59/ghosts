@@ -28,7 +28,6 @@
   function interval() {
     sessionIndex++;
     if (sessionIndex == session.length) {
-      clearInterval(intervalId);
       return;
     }
 
@@ -37,8 +36,11 @@
       previousCoordinates = [...targetCoordinates];
       targetCoordinates = entry[1];
       displayCoordinates = [...previousCoordinates];
+      setTimeout(interval, 50);
     } else {
+      previousCoordinates = [...targetCoordinates];
       executeCommand(entry[1]);
+      interval();
     }
   }
 
@@ -58,7 +60,7 @@
   }
 
   onMount(() => {
-    intervalId = setInterval(interval, 50);
+    interval();
     frame();
   });
 </script>
