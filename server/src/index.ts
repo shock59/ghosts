@@ -14,7 +14,9 @@ const io = new Server(server, { cors: { origin: "http://localhost:5173" } });
 
 setInterval(() => {
   console.log(
-    `Writing sessions to DB (${db.data.sessions.length} sessions stored)`
+    `Writing sessions to DB (${
+      Object.values(db.data.sessions).length
+    } sessions stored)`
   );
   db.write();
 }, 60_000);
