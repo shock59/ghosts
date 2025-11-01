@@ -20,12 +20,10 @@
   let previousCoordinates: Coordinates = $state([0, 0]);
   let displayCoordinates: Coordinates = $state([0, 0]);
 
-  let intervalId: number;
-
   let previousTime: number = $state(0);
   let delta: number = $state(0);
 
-  function interval() {
+  function nextSessionEntry() {
     sessionIndex++;
     if (sessionIndex == session.length) {
       return;
@@ -36,11 +34,11 @@
       previousCoordinates = [...targetCoordinates];
       targetCoordinates = entry[1];
       displayCoordinates = [...previousCoordinates];
-      setTimeout(interval, 50);
+      setTimeout(nextSessionEntry, 50);
     } else {
       previousCoordinates = [...targetCoordinates];
       executeCommand(entry[1]);
-      interval();
+      nextSessionEntry();
     }
   }
 
@@ -60,7 +58,7 @@
   }
 
   onMount(() => {
-    interval();
+    nextSessionEntry();
     frame();
   });
 </script>
