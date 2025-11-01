@@ -5,6 +5,7 @@
   import Counter from "./components/Counter.svelte";
   import Canvas from "./components/Canvas.svelte";
   import Slider from "./components/Slider.svelte";
+  import colors from "./lib/colors";
 
   let socket: Socket;
 
@@ -71,9 +72,9 @@
 
     <div class="container"><Canvas /></div>
 
-    <div class="container"><Slider /></div>
-    <div class="container"><Slider /></div>
-    <div class="container"><Slider /></div>
+    <div class="container"><Slider color={colors[2]} /></div>
+    <div class="container"><Slider color={colors[6]} /></div>
+    <div class="container"><Slider color={colors[9]} /></div>
   </div>
 </main>
 

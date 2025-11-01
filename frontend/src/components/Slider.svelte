@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
+  const { color }: { color: string } = $props();
+
   let sliderElement: HTMLDivElement;
 
   let mouseDown: boolean = $state(false);
@@ -28,7 +30,11 @@
   });
 </script>
 
-<div class="slider" bind:this={sliderElement}>
+<div
+  class="slider"
+  bind:this={sliderElement}
+  style="background: linear-gradient(to right, {color}, {color} {sliderPosition}px, #313244 {sliderPosition}px)"
+>
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="handle"
@@ -43,7 +49,6 @@
     height: 20px;
     margin: 10px auto;
     display: flex;
-    background: #313244;
     border: 1px #45475a solid;
     border-radius: 8px;
     cursor: pointer;
