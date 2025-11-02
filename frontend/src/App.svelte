@@ -181,9 +181,7 @@
   #content {
     width: 800px;
     padding: 16px 32px;
-    color: #cdd6f4;
     background: #1e1e2e;
-    font-family: "Inter";
     font-size: 18px;
     text-align: center;
   }

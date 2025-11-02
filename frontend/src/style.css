@@ -1,6 +1,8 @@
 body {
   margin: 0;
   overflow-x: hidden;
+  color: #cdd6f4;
+  font-family: "Inter";
 }
 
 button,
