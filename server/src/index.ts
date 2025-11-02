@@ -3,7 +3,8 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import { drizzle } from "drizzle-orm/libsql";
-import { replaysTable } from "./db/schema.js";
+import { replaysTable, sessionEntriesTable } from "./db/schema.js";
+import { eq } from "drizzle-orm";
 
 const badWords: string[] = JSON.parse(process.env.BAD_WORDS!);
 
@@ -18,13 +19,19 @@ io.on("connection", (socket) => {
 
   (async () => {
     const replays = await db.select().from(replaysTable);
-    socket.emit(
-      "replays",
-      replays.map((replay) => ({
+    for (const replay of replays) {
+      const sessionEntries = await db
+        .select()
+        .from(sessionEntriesTable)
+        .where(eq(sessionEntriesTable.id, replay.id));
+      const session = sessionEntries
+        .toSorted((a, b) => a.index - b.index)
+        .map((entry) => JSON.parse(entry.value));
+      socket.emit("newReplay", {
         name: replay.name,
-        session: JSON.parse(replay.session),
-      }))
-    );
+        session,
+      });
+    }
   })();
 
   let session: Session = [];
@@ -50,10 +57,19 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", async () => {
     console.log(`Client disconnected: ${socket.id}`);
-    await db.insert(replaysTable).values({
+
+    const insertion = await db.insert(replaysTable).values({
       name,
-      session: JSON.stringify(session),
     });
+    const id = insertion.lastInsertRowid;
+
+    for (const index in session) {
+      await db.insert(sessionEntriesTable).values({
+        id: Number(id),
+        index: Number(index),
+        value: JSON.stringify(session[index]),
+      });
+    }
   });
 });
 

@@ -90,8 +90,8 @@
     window.addEventListener("resize", updateContentCoordinates);
 
     socket = io("http://localhost:3000");
-    socket.on("replays", (newGhosts) => {
-      ghosts = newGhosts;
+    socket.on("newReplay", (newGhosts) => {
+      ghosts.push(newGhosts);
     });
     socket.on("updateNameResponse", (newUpdateNameResponse) => {
       updateNameResponse = newUpdateNameResponse;
