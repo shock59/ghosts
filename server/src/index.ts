@@ -11,6 +11,9 @@ const badWords: string[] = JSON.parse(process.env.BAD_WORDS!);
 const db = drizzle(process.env.DB_FILE_NAME!);
 
 const app = express();
+
+app.use(express.static("public"));
+
 const server = createServer(app);
 const io = new Server(server, { cors: { origin: process.env.FRONTEND_URL! } });
 
