@@ -5,6 +5,8 @@ import { Server } from "socket.io";
 import { drizzle } from "drizzle-orm/libsql";
 import { replaysTable } from "./db/schema.js";
 
+const badWords: string[] = JSON.parse(process.env.BAD_WORDS!);
+
 const db = drizzle(process.env.DB_FILE_NAME!);
 
 const app = express();
@@ -33,7 +35,17 @@ io.on("connection", (socket) => {
   });
   socket.on("updateName", (newName: string) => {
     newName = newName.trim();
+    for (const word of badWords) {
+      if (newName.includes(word)) {
+        socket.emit(
+          "updateNameResponse",
+          "Your new name was blocked by the bad word filter"
+        );
+        return;
+      }
+    }
     name = newName != "" ? newName : "Ghost";
+    socket.emit("updateNameResponse", `Updated name to ${newName}`);
   });
 
   socket.on("disconnect", async () => {

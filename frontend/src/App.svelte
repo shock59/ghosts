@@ -15,7 +15,7 @@
   let delay: number = $state(0);
   let session: Session = $state([]);
   let ghostName: string = $state("");
-  let lastUpdatedGhostName: string = $state("");
+  let updateNameResponse: string = $state("");
 
   let content: HTMLElement;
   let contentCoordinates: Coordinates = $state([0, 0]);
@@ -83,7 +83,6 @@
 
   function updateGhostName() {
     socket.emit("updateName", ghostName);
-    lastUpdatedGhostName = ghostName.trim() != "" ? ghostName : "Ghost";
   }
 
   onMount(() => {
@@ -93,6 +92,9 @@
     socket = io("http://localhost:3000");
     socket.on("replays", (newGhosts) => {
       ghosts = newGhosts;
+    });
+    socket.on("updateNameResponse", (newUpdateNameResponse) => {
+      updateNameResponse = newUpdateNameResponse;
     });
 
     document.addEventListener("mousemove", mouseMoved);
@@ -161,8 +163,8 @@
       >
     </div>
     <div class="container">
-      {#if lastUpdatedGhostName != ""}
-        Updated name to {lastUpdatedGhostName}
+      {#if updateNameResponse != ""}
+        {updateNameResponse}
       {/if}
     </div>
   </div>
