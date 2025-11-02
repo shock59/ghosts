@@ -89,7 +89,7 @@
     updateContentCoordinates();
     window.addEventListener("resize", updateContentCoordinates);
 
-    socket = io("http://localhost:3000");
+    socket = io(import.meta.env.VITE_SOCKET_SERVER_URL!);
     socket.on("newReplay", (newGhosts) => {
       ghosts.push(newGhosts);
     });
