@@ -17,8 +17,11 @@ io.on("connection", (socket) => {
   (async () => {
     const replays = await db.select().from(replaysTable);
     socket.emit(
-      "sessions",
-      replays.map((replay) => JSON.parse(replay.session))
+      "replays",
+      replays.map((replay) => ({
+        name: replay.name,
+        session: JSON.parse(replay.session),
+      }))
     );
   })();
 

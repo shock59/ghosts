@@ -9,7 +9,7 @@
 
   let socket: Socket;
 
-  let sessions: Session[] = $state([]);
+  let ghosts: Ghost[] = $state([]);
 
   let mouseCoordinates: Coordinates = $state([0, 0]);
   let delay: number = $state(0);
@@ -91,8 +91,8 @@
     window.addEventListener("resize", updateContentCoordinates);
 
     socket = io("http://localhost:3000");
-    socket.on("sessions", (newSessions) => {
-      sessions = newSessions;
+    socket.on("replays", (newGhosts) => {
+      ghosts = newGhosts;
     });
 
     document.addEventListener("mousemove", mouseMoved);
@@ -101,8 +101,8 @@
   });
 </script>
 
-{#each sessions as session}
-  <GhostReplay {session} {contentCoordinates} {executeCommand} />
+{#each ghosts as ghost}
+  <GhostReplay {ghost} {contentCoordinates} {executeCommand} />
 {/each}
 
 <main>

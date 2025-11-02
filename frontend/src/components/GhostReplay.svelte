@@ -3,11 +3,11 @@
   import colors from "../lib/colors";
 
   let {
-    session,
+    ghost,
     contentCoordinates,
     executeCommand,
   }: {
-    session: Session;
+    ghost: Ghost;
     contentCoordinates: Coordinates;
     executeCommand: (command: Command) => void;
   } = $props();
@@ -29,11 +29,11 @@
 
   function nextSessionEntry() {
     sessionIndex++;
-    if (sessionIndex >= session.length) {
+    if (sessionIndex >= ghost.session.length) {
       return;
     }
 
-    const entry = session[sessionIndex];
+    const entry = ghost.session[sessionIndex];
     if (entry[0] === 0) {
       previousCoordinates = [...targetCoordinates];
       targetCoordinates = entry[1];
@@ -50,7 +50,7 @@
   }
 
   function frame() {
-    if (sessionIndex >= session.length) return;
+    if (sessionIndex >= ghost.session.length) return;
 
     const now = Date.now();
     delta = now - previousTime;
@@ -86,7 +86,7 @@
     contentCoordinates[0] -
     16}px; top: {displayCoordinates[1] +
     contentCoordinates[1] -
-    16}px; opacity: {sessionIndex >= session.length ? 0 : 1};"
+    16}px; opacity: {sessionIndex >= ghost.session.length ? 0 : 1};"
   bind:this={element}
 >
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -96,7 +96,7 @@
     /></svg
   >
   <div class="name" style="color: {color}; opacity: {showName ? '1' : '0'};">
-    Ghost Name
+    {ghost.name}
   </div>
 </div>
 
